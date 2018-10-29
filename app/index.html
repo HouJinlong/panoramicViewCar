@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>麦赛福格森产品全景系列</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link rel="stylesheet" href="/css/Swiper/swiper.min.css?v=9">
+		<style>
+			body{
+				background: #c00031;
+				font-family: "Roboto Condensed",arial,sans-serif,simhei,"microsoft yahei";
+			}
+			*{
+				margin: 0;
+				padding: 0;
+			}
+		
+				@media screen and (orientation: portrait) {
+					.swiper-container {
+						width: 100%;
+						padding-top: 50px;
+						padding-bottom: 50px;
+					}
+					.swiper-slide {
+						width: 80vw;
+						max-width: 500px;
+					}
+					h2{
+						margin-top: 100px;
+					}
+					.swiper-slide h3{
+						text-align: center;
+						padding-top: 20px;
+							color: #fff;
+							font-size:14px;
+						text-shadow:  1px 1px #000000;
+					}
+				}
+				@media screen and (orientation: landscape) {
+					h2{
+						margin-top: 20px;
+					}
+					.swiper-container {
+						width: 100%;
+						padding-top: 20px;
+						padding-bottom: 50px;
+					}
+					.swiper-slide {
+						width: calc(100vh - 130px);
+						max-width: 500px;
+					}
+					.swiper-slide h3{
+
+						font-size: 10px;
+						text-align: center;
+						padding-top: 10px;
+							color: #fff;
+						text-shadow:  1px 1px #000000;
+					}
+				}
+		     .swiper-slide .img{
+		     	 background: #fff;
+			      border-radius: 10px;
+			      overflow: hidden;
+			    box-shadow: 1px 1px #000;
+		     }
+		     
+		     .swiper-slide  img{
+		     	max-width: 100%;
+		     	display: block;
+		     }
+		    .swiper-pagination-bullet-active{
+		    	background: #fff;
+		    }
+		    h2{
+		    	text-align: center;
+		    	font-size: 24px;
+		    	color: #fff;
+		    	text-shadow:  1px 1px #000000;
+		    }
+		    a{
+		    	text-decoration: none;
+		    }
+				.swiper-pagination-bullet {
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 20px;
+      font-size: 12px;
+      color:#000;
+      opacity: 1;
+      background: rgba(0,0,0,0.2);
+    }
+    .swiper-pagination-bullet-active {
+      color:red;
+      background: #fff;
+    }
+	/* pad 展示 */
+	@media screen and (min-width:1000px) {
+		h2{
+			font-size: 50px;
+			margin-top: 100px;
+			margin-bottom: 50px;
+		}
+		.swiper-slide h3{
+			font-size: 20px;
+		}
+	}
+	/* pad 后退 */
+	body{
+		touch-action: none
+	}
+		</style>
+	</head>
+	<body>
+		<h2>
+			麦赛福格森产品全景系列
+		</h2>
+		 <!-- Swiper -->
+		  <div class="swiper-container">
+		    <div class="swiper-wrapper">
+	            
+		    </div>
+		    <!-- Add Pagination -->
+		    <div class="swiper-pagination"></div>
+		  </div>
+
+		
+		<script src="./js/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/js/Swiper/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+		
+		<script src="./js/data.js?v=9" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var company = 'agco';
+			var iJson = Json[company];
+			var prevImg = ['2404','3404','T5','S1204-C','S1204-C_1'];
+			var arr = ['3404','2404','S1204-C_1','S1204-C','T5','2270XD','2270','1840','1844'];
+			var wss = ['mf8700','mf7700','s1204','s1204_1','T5','2270XD','2270','mf1840','mf1844'];
+			var obj=[];
+			$('.swiper-wrapper').html(function(){
+				var html = '';
+				arr.forEach(function(x,index){
+					objs = {};
+					objs.img = 'https://all.img.s105.cn/vrimage/agco/'+wss[index]+'/product/'+(($.inArray(x,prevImg)!=-1)?'preview':'1')+'.png'
+					objs.title = iJson[x].ring.globalConfig.title3;
+					html+='<div class="swiper-slide" data-hash="'+x+'">';
+		      	 	html+='<a href="./ring/pc.html?product='+x+'&company='+company+'">';
+		      	 	html+='<div class="img">';
+		      	 	html+='<img src="ring/images/'+x+'/'+(($.inArray(x,prevImg)!=-1)?'preview':'1')+'.png?v=9" class="ani" swiper-animate-effect="fadeInLeft" swiper-animate-duration=".5s" />';
+		      	 	html+='</div>';
+		      	 	html+='<h3  class="ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" >'+iJson[x].ring.globalConfig.title3+'</h3>';
+		      	 	html+='</a>';
+					   html+='</div>';
+					   obj.push(objs)  
+				});
+				console.log(obj)
+				return html;
+			})
+
+			var swiper = new Swiper('.swiper-container', {
+				observer:true,
+				hashNavigation: true,
+				initialSlide :5,
+		      effect: 'coverflow',
+		      grabCursor: true,
+		      centeredSlides: true,
+		      slidesPerView: 'auto',
+		      coverflowEffect: {
+		        rotate: 50,
+		        stretch: 10,
+		        depth: 100,
+		        modifier: 1,
+		        slideShadows : false,
+					},
+					
+					pagination: {
+							el: '.swiper-pagination',
+							clickable: true,
+							renderBullet: function (index, className) {
+								return '<span class="' + className + '">' + (index + 1) + '</span>';
+							},
+				},
+		      on:{
+			      init: function(){
+			        // swiperAnimateCache(this); //隐藏动画元素 
+			        // swiperAnimate(this); //初始化完成开始动画
+			      }, 
+			      slideChangeTransitionEnd: function(){ 
+			        // swiperAnimate(this); //每个slide切换结束时也运行当前slide动画
+			      }
+			   }
+			});
+		</script>
+	</body>
+</html>

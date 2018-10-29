@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title>内景</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta http-equiv="x-ua-compatible" content="IE=edge" />
+	<link rel="stylesheet" type="text/css" href="../css/jquery.fancybox.min.css?v=9"/>
+	<link rel="stylesheet" type="text/css" href="css/pc.css?v=9"/>
+	<style>
+	.fancybox-caption{
+		font-size:24px;
+	}
+	.fancybox-navigation .fancybox-button--arrow_right{
+		padding: 0;
+		width: 100px;
+	}
+	.fancybox-navigation .fancybox-button--arrow_left{
+		padding: 0;
+		width: 100px;
+	}
+	.fancybox-infobar{
+		font-size:24px;
+	}
+	
+	.fancybox-slide--video .fancybox-content{
+		transform: scale(.8);
+	}
+	</style>
+    <script type="text/javascript">
+			if (/iphone|nokia|sony|ericsson|mot|samsung|sgh|lg|philips|panasonic|alcatel|lenovo|cldc|midp|wap|android|iPod/i.test(navigator.userAgent.toLowerCase())) {
+				window.location.href = 'mobile.html'+location.search;;
+			}
+    </script>
+		<!--获取公共数据-->
+    <script src="../js/data.js?v=9" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	getData('vtour');
+    </script>
+</head>
+<body>
+	<script src="tour.js"></script>
+	<div class='pano-con'>
+        <div id="pano" class="pano">
+			<noscript><table style="width:100%;height:100%;"><tr style="vertical-align:middle;"><td><div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div></td></tr></table></noscript>
+        </div>
+        <div class="mask1"></div>
+        <div class="banner">
+            <div class="show">
+                <div class="img"></div>
+                <div class="text">隐藏</div>
+            </div>
+            <div class="group">
+                <div class="setup btn2">
+                    <div class="bg2 s1"></div>
+                    <div class="text">设置</div>
+                    <div class="vr btn3">
+                        <div class="bg3 i1"></div>
+                        <div class="text">VR</div>
+                    </div>
+                    <div class="music btn3">
+                        <div class="bg3 i2"></div>
+                        <div class="text">音乐</div>
+                    </div>
+                    <div class="gyro btn3">
+                        <div class="bg3 i3"></div>
+                        <div class="text">陀螺仪</div>
+                    </div>
+                    <div class="screen btn3">
+                        <div class="bg3 i4"></div>
+                        <div class="text">全屏</div>
+                    </div>
+                </div>
+                <a class="ask-price btn2" href="#price-div">
+                    <div class="bg2 s2"></div>
+                    <div class="text">询价</div>
+                </a>
+                <div class="swich-scene btn1">
+                    <div class="bg1"></div>
+                    <div class="text">外观</div>
+                </div>
+                <a class="feedback btn2" href="#feedback">
+                    <div class="bg2 s3"></div>
+                    <div class="text">反馈</div>
+                </a>
+                <div class="praise btn2">
+                    <div class="bg2 s4"></div>
+                    <div class="text"></div>
+                </div>
+            </div>
+
+        </div>
+		<!--二维码-->
+	 	<div id="qrcode-div" >
+            <div id="qrcode-txt" class="txt"></div>
+        </div>	
+        <!--标题-->
+	 	<div id="title-div">
+            <div id="title1-div"></div>
+            <div id="title2-div"></div>
+        </div>
+         <!-- 询价弹层 start -->
+	    <div id="price-div" style="display: none; width: 200px; height: 200px;" >
+	    	咨询价格
+	    </div>
+	    <!-- 询价弹层 end -->
+	     <!-- 反馈弹层 start -->
+	    <div id="feedback" style="display: none; width: 200px; height: 200px;">
+	    	   反馈弹层
+	    </div>
+	    <!-- 反馈弹层 end -->
+        <audio id="audio" src=""></audio>
+    </div>
+	<script src="../js/jquery-2.1.0.js"></script>
+	<script src="../js/jquery.fancybox.min.js?v=9" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/qrcode.js?v=9" type="text/javascript" charset="utf-8"></script>
+	<script src="../js/commit.js?v=9" type="text/javascript" charset="utf-8"></script>
+	<script>
+
+		var globalConfig = jsonData.globalConfig;
+	   
+		
+		embedpano({id:'krpanoSWFObject',swf:"tour.swf", xml:jsonData.xmlUrl, target:"pano", html5:"auto", mobilescale:1.0, passQueryParameters:true,onready: krpanoReady});
+		function krpanoReady(){
+			window.krpano = document.getElementById('krpanoSWFObject');
+			$(".banner,.mask1").show();
+		    $(".praise .text").text(globalConfig.like);
+			        	 
+        	 //设置二维码
+        	var qrcode = new QRCode(document.getElementById("qrcode-div"), {
+	            width : $('#qrcode-div').width()-10,//设置宽高
+	            height : $('#qrcode-div').width()-10
+	        })
+        	qrcode.makeCode(location.href);
+        	$('#qrcode-div .txt').text("人气:" + globalConfig.visit)
+			$('#qrcode-div').show();
+			//设置标题
+			var $div = $("#title-div").css('opacity','1').find('div');
+			$div.eq(0).html(globalConfig.title1);
+			$div.eq(1).html(globalConfig.title2);
+			bindEven()
+		}
+		function bindEven(){
+			var u = {
+				show:false,
+				exprand:false,
+				music:false
+			};	
+			 //反馈
+ 			 $(".feedback").on(clickEvent, function(t) {
+				t.stopPropagation(),
+				$.fancybox.open('<div class="message"><h2>此功能暂无</h2></div>');
+		    });
+    		 //点赞
+		    $(".praise .bg2").on(clickEvent, function() {		     
+		        $(".praise .text").text(++globalConfig.like),
+		        $(this).css("transition", "0s"),
+		         $(this).css({
+		            "background-position-x": "-360px",
+		            "pointer-events": "none"
+		        }),
+		        $(this).off(clickEvent);
+		        //调取接口
+		        
+		    })
+    		 //看内景
+    		 $(".swich-scene").on(clickEvent, function() {		     
+		         globalConfig.panourl ? window.location.href = globalConfig.panourl : $.fancybox.open('<div class="message"><h2>此车暂无全景外饰，敬请期待!</h2></div>');
+		    })
+	 		 //咨询价格
+ 		 	$(".ask-price").on(clickEvent, function() {
+				t.stopPropagation(),
+		        $.fancybox.open('<div class="message"><h2>此功能暂无</h2></div>');
+		    });
+			 //音乐
+			 var  h = document.getElementById("audio");
+    		 h.src = globalConfig.musicurl;
+			 $(".setup .music").on(clickEvent, function(t) {
+		        t.stopPropagation();
+		        var e = $(".setup .music .bg3");
+		        e.css("transition", "0s"),
+		        u.music = !u.music;
+		        if(u.music){
+		        	e.css("background-position-y", "0"),
+		        	h.play();
+		        }else{
+		        	e.css("background-position-y", "-70px"),
+		        	h.pause();
+		        }
+		        setTimeout(function() {
+		            e.css("transition", "0.2s"),
+		            $(".setup").trigger(clickEvent)
+		        }, 200);		       
+		    });
+			 //全屏btn
+			  $(".setup .screen").on(clickEvent, function(e) {
+			  	var a = $(this).find('.bg3');
+			  		e.stopPropagation();
+			  		if(document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement){
+			  			document.exitFullscreen ? document.exitFullscreen() : document.msExitFullscreen ? document.msExitFullscreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitExitFullscreen && document.webkitExitFullscreen();
+			  			
+				        a.css("transition", "0s"),
+				        setTimeout(function() {
+				            a.css("background-position-y", "-70px"),
+				            setTimeout(function() {
+				                a.css("transition", "0.2s"),
+				                $(".setup").trigger(clickEvent)
+				            }, 200)
+				        }, 0)
+			  		}else{
+			  			document.documentElement.requestFullscreen ? document.documentElement.requestFullscreen() : document.documentElement.mozRequestFullScreen ? document.documentElement.mozRequestFullScreen() : document.documentElement.webkitRequestFullscreen ? document.documentElement.webkitRequestFullscreen() : document.documentElement.msRequestFullscreen && document.documentElement.msRequestFullscreen();
+			  			
+			  			a.css("transition", "0s");
+			  			
+				        setTimeout(function() {
+				            a.css("background-position-y", "0"),
+				            setTimeout(function() {
+				                a.css("transition", "0.2s"),
+				                $(".setup").trigger(clickEvent)
+				            }, 200)
+				        }, 0);
+			  		}
+			  });
+			 //设置btn
+			 $(".setup").on(clickEvent, function() {
+        		u.exprand = !u.exprand;
+        		if(u.exprand ){
+        			 $(".setup .music,.screen").show(),
+			        setTimeout(function() {
+			            $(".banner .group .setup .btn3").css({
+			                top: "-100px",
+			                opacity: 1
+			            }),
+			            $(".banner .group .setup .music").css({
+			                left: "60px"
+			            }),
+			            $(".banner .group .setup .screen").css({
+			                left: "-40px"
+			            })
+			        }, 0);
+        		}else{
+        			$(".banner .group .setup .btn3").css({
+			            left: "10px",
+			            top: "-100px",
+			            opacity: 0
+			        })
+        		   setTimeout(function() {
+			            $(".btn3").hide();
+			        }, 200);
+        		}
+		    })
+			 //显示隐藏btn
+			 $(".banner .show").on(clickEvent, function() {	
+			 	
+		        var t = this;
+		        u.show = !u.show;
+		        var e = $(".banner .show .img")
+		          , n = $(".banner .show .text");
+		        e.css("transition", "0s");
+		        if(u.show){
+		        	e.css("background-position-y", "0")
+		        	n.text("显示"),
+		        	$(".banner,.mask1").css({
+			            transform: "translateY(200px)"
+			        });
+			        setTimeout(function() {
+			            $(t).css({
+			                transform: "translateY(-200px) scale(" + btn_scale + ")"
+			            }),
+			            $("#title-div").hide(),
+			            $("#qrcode-div").hide(),
+			            $(".anim").css('visibility','hidden');
+			        }, 500)
+			        
+			        
+		        }else{
+		        	e.css("background-position-y", "-70px");
+		        	n.text("隐藏")
+		        	$(this).css({transform: "translateY(0)  scale(" + btn_scale + ")"});
+		        	setTimeout(function() {
+			            $(".banner").css({
+			                transform: "translateY(0)"
+			            }),
+			            $(".mask1").css({
+			                 transform: "translateY(0) scaleY(" + btn_scale + ")"
+			            }),
+			            $("#title-div").show(),
+			            $("#qrcode-div").show();
+			            $(".anim").css('visibility','visible');
+			        }, 300)
+			        
+			         setTimeout(function() {
+			            e.css("transition", "0.2s")
+			        }, 0)
+			    }     
+	        });
+	        
+		}
+		function animClickHandle(hotsTypeId){
+			var Id = hotsTypeId.split('hotsType')[1];
+			var infoData = jsonData.hotsType[Id];	
+			if( $(".anim").length>0||("video" != infoData.fancybox[0].type)){
+				$.fancybox.open(infoData.fancybox, {
+                    loop : false
+                });
+				return;
+			}
+			var g = null
+			, b = $("#krpanoSWFObject :contains(" + hotsTypeId + ")")
+			, y = "anim-point.png";
+			for (var w = 0, x = b.length; w < x; w++) {
+			var _ = b.eq(w);
+				if (_.text() === hotsTypeId && _.css("background-image").indexOf(y) > -1) {
+					g = b.eq(w);
+					break
+				}
+			}
+			var transform = hot.getTransform(g.offset().left, ($(window).width() - g.offset().left), g.offset().top, ($(window).height() - g.offset().top));
+			var $node = ("<div class='anim' style='display:block;width:"+ g.width()+";height:"+ g.height()+";transform: scale(" + hot_scale + ") " + transform+";'>"+hot.getShowHtml(infoData,transform)+"</div>");
+			g.append($node).css('z-index','2002');
+			setTimeout(function() {
+				$(document).on(clickEvent, removeHost)
+			}, 0);
+		}
+		function removeHost(){		
+	        $(document).off(clickEvent, removeHost);
+			$(".anim").parent().css('z-index','2001');
+			$(".anim").remove()
+	        krpano.call('set(layer[skin_scroll_window].visible,false);');
+		}
+	</script>
+
+</body>
+</html>

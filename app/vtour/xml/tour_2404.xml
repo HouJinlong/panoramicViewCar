@@ -1,0 +1,42 @@
+﻿<krpano version="1.19" title="Virtual Tour">
+
+	<include url="../skin/njtvtourskin.xml?v=4" />
+	<!-- startup action - load the first scene -->
+	<action name="startup" autorun="onstart">
+		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[0].name); );
+		loadscene(get(startscene), null, MERGE);
+		if(startactions !== null, startactions() );
+	</action>
+
+
+	
+	<scene name="scene_2404" title="2404" onstart="" havevrimage="true" thumburl="../panos/2404.tiles/thumb.jpg" lat="" lng="" heading="">
+
+		<view hlookat="-58.788" vlookat="19.781" fovtype="MFOV" fov="120.000" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" />
+
+		<preview url="../panos/2404.tiles/preview.jpg" />
+
+		<image type="CUBE" multires="true" tilesize="512" if="!webvr.isenabled">
+			<level tiledimagewidth="2560" tiledimageheight="2560">
+				<cube url="../panos/2404.tiles/%s/l3/%v/l3_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="1280" tiledimageheight="1280">
+				<cube url="../panos/2404.tiles/%s/l2/%v/l2_%s_%v_%h.jpg" />
+			</level>
+			<level tiledimagewidth="640" tiledimageheight="640">
+				<cube url="../panos/2404.tiles/%s/l1/%v/l1_%s_%v_%h.jpg" />
+			</level>
+		</image>
+
+		<image if="webvr.isenabled">
+			<cube url="../panos/2404.tiles/vr/pano_%s.jpg" />
+		</image>
+		<hotspot name="spot4" style="dynamic_" ath="-53.393" atv="21.082"  hId='hotsType10'  />
+		<hotspot name="spot5" style="dynamic_" ath="-77.795" atv="26.605" hId='hotsType11'/>
+		<hotspot name="spot6" style="dynamic_" ath="-12.442" atv="41.334" hId='hotsType12' />
+		<hotspot name="spot7" style="dynamic_" ath="32.308" atv="-2.446" hId='hotsType13' />
+
+	</scene>
+
+
+</krpano>

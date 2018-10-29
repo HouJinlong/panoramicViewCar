@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>爱科</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <link href="/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="css/pc.css?v=2"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.fancybox.min.css?v=2"/>
+    <style>
+        #bg-div{
+            width:50%;
+            height:100%;
+        }
+        #mySpriteSpin,.spritespin-stage{
+            overflow: visible !important;
+        }
+    </style>
+    <!--获取公共数据-->
+   <script src="../js/data.js?v=2" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	getData('ring');
+    </script>
+</head>
+<body>
+        <div id="bg-div">
+            <div class="banner">
+                <div class="show">
+                    <div class="img"></div>
+                    <div class="text">隐藏</div>
+                </div>
+                <div class="group">
+                    <div class="setup btn2">
+                        <div class="bg2 s1"></div>
+                        <div class="text">设置</div>
+                        <div class="music btn3">
+                            <div class="bg3 i2"></div>
+                            <div class="text">音乐</div>
+                        </div>
+                        <div class="screen btn3">
+                            <div class="bg3 i4"></div>
+                            <div class="text">全屏</div>
+                        </div>
+                    </div>
+                    <a class="ask-price btn2" href="#price-div">
+                        <div class="bg2 s2"></div>
+                        <div class="text">询价</div>
+                    </a>
+                    <div class="swich-scene btn1">
+                        <div class="bg1"></div>
+                        <div class="text">内饰</div>
+                    </div>
+                    <a class="feedback btn2" href="#feedback">
+                        <div class="bg2 s3"></div>
+                        <div class="text">反馈</div>
+                    </a>
+                    <div class="praise btn2">
+                        <div class="bg2 s4"></div>
+                        <div class="text"></div>
+                    </div>	
+                </div>           	       		
+            </div>
+            <!--标题-->
+            <div id="title-div">
+                <div id="title1-div"></div>
+                <div id="title2-div"></div>
+            </div>
+            <audio id="audio" ></audio>
+            <!--导航背景-->
+            <div class="mask1"></div>
+            <!--二维码-->
+            <div id="qrcode-div" >
+                <div id="qrcode-txt" class="txt"></div>
+            </div>
+            <!--内容层-->
+            <div id='mySpriteSpin' style="z-index: 333;"></div>
+            <!--内容层-->	
+        </div>
+        <br>
+    <div class="container-fluid" id="Vue">
+        <div class="row">
+            <div class="col-xs-6 col-xs-offset-6">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <div class="checkbox" style="margin:0">
+                            <label>
+                            <input type="checkbox" v-model="editStatus" vlaue='1'>编辑
+                            </label>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            当前帧 <span class="label label-success">{{frame}}</span>
+                            <button class="btn btn-xs btn-primary" @click="fnChangeFrame">设置当前帧为首帧</button>
+                            <button class="btn btn-xs btn-success pull-right" @click="fnSave" style="margin-left:5px">保存</button>
+                            <button class="btn btn-xs btn-info pull-right" @click="fnGet" style="margin-left:5px">获取jsonData</button>
+                    <button class="btn btn-xs btn-danger pull-right" @click="fnClear" style="margin-left:5px" v-show='hasStore'>清除</button>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <select v-model="selHotTypeId"  class="form-control">
+                                    <option value="">请选择热点</option>
+                                    <option :value="key" v-for="(item,key) in jsonData.hotsType">{{key}}</option>
+                                </select>
+                                <br/>
+                                <button class="btn btn-danger btn-block" @click="fnDelHot" v-show="hotEl!=''">删除该热点</button>
+                            </div>
+                            <div class="col-xs-4">
+                                    <textarea name="" id="" cols="30" rows="10" class="form-control" @change="fnChangeHotsType($event)">{{jsonData.hotsType[selHotTypeId]}}</textarea>
+                             </div>
+                             <div class="col-xs-4">
+                                    <textarea name="" id="" cols="30" rows="10" class="form-control">{{hotsPot}}</textarea>
+                             </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                    <textarea name="" id="" cols="30" rows="30" class="form-control" @change="fnChangeJsonData($event)">{{jsonData}}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/jquery-2.1.0.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+	<script src="../js/jquery.fancybox.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/spritespin.js?v=2" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+	<script src="../js/qrcode.js?v=2" type="text/javascript" charset="utf-8"></script>
+    <script src="../js/commit.js?v=2" type="text/javascript" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/store.js/1.3.20/store.min.js"></script>
+	<script>
+        hot_scale = .8;
+        var hasStore = false;
+        if(store.get('jsonData')){
+            jsonData = store.get('jsonData');
+            hasStore = true;
+        }
+		$(function(){
+           myVue =new Vue({
+                el:'#Vue',
+                data:{
+                    editStatus:false,
+                    jsonData:jsonData,
+                    selHotTypeId:'',
+                    frame:jsonData.frame,
+                    hotEl:'',
+                    hasStore:hasStore
+                },
+                computed: {
+                    hotsPot:function(){
+                        if(this.hotEl!=''){
+                            return this.jsonData.hotsPotList[this.frame][$(this.hotEl).index('.anim.'+this.frame)];
+                        }else{
+                            return '';
+                        }
+                    }
+                },
+                mounted(){},
+                methods:{
+                    fnDelHot:function(){
+                       $(this.hotEl).remove();
+                       this.hotEl = '';
+                    },
+                    fnChangeHotsType:function(e){
+                        if(this.selHotTypeId&&this.jsonData.hotsType[this.selHotTypeId]&&e.target.value!=''){
+                            this.jsonData.hotsType[this.selHotTypeId] = JSON.parse(e.target.value);
+                        }
+                    },
+                    fnChangeJsonData:function(e){
+                        if(e.target.value!=''){
+                            this.jsonData = JSON.parse(e.target.value);
+                        }
+                    },
+                    fnChangeFrame:function(){
+                        this.jsonData.frame=mySpriteSpin.frame;
+                    },
+                    fnSave:function(){
+						var hotsPotList = [];
+						for(var i=0;i<jsonData.imgList.length;i++){
+							hotsPotList[i] = [];
+							$('.anim.'+i).each(function(){
+								hotsPotList[i].push(JSON.parse($(this).find('textarea').val()))
+							});
+						}
+						this.jsonData.hotsPotList =hotsPotList;
+                        store.set('jsonData',this.jsonData);
+                        location.reload('true');
+                    },
+                    fnClear:function(){
+                        store.remove('jsonData');
+                        location.reload('true');
+                    },fnGet:function(){
+                        console.log(JSON.stringify(this.jsonData))
+                    }
+                    
+                }
+            });
+			var globalConfig = jsonData.globalConfig;
+          
+			var mySpriteSpin = $("#mySpriteSpin").spritespin({
+				source: jsonData.imgList,
+				sizeMode:"fit",
+				width   :$(window).width()/2,  
+				height  : $(window).height(),  
+				animate:false,
+				frameTime:40,
+				frame: jsonData.frame,
+				onLoad:function(){
+                    $('.spritespin-progress-bar').hide();
+                    mySpriteSpin.canvas.click(function(e){
+						if(myVue.editStatus!=true||myVue.selHotTypeId==''){return};
+                        if(!myVue.jsonData.hotsPotList[myVue.frame]){
+                            myVue.jsonData.hotsPotList[myVue.frame] = [];
+                        }
+			  	   		var Hotspot = {};
+			  	   		var cY = this.offsetTop;
+			  	   		var cx = this.offsetLeft;
+			  	   		
+			  	   		var cw = this.clientWidth;
+			  	   		var ch = this.clientHeight;
+			  	   		Hotspot.Id = myVue.selHotTypeId;
+			  	   		Hotspot.T = ((e.clientY - cY)/ch)*100 +'%';
+			  	   		Hotspot.L = ((e.clientX - cx)/cw)*100 +'%';
+			  	   		myVue.jsonData.hotsPotList[myVue.frame].push(Hotspot);
+                        var $node = $(hot.getHotStr(myVue.frame,Hotspot,true));
+                        $node.show();
+                       
+                        $('.spritespin-stage').append($node);
+                        myVue.hotEl = $node[0];
+			  	   });
+					PageInit();
+                    bindEven();
+                    $('.anim.'+mySpriteSpin.frame).show();
+				},
+				onFrameChanged:function(e,data){
+                    myVue.hotEl = '';
+                    myVue.frame = data.frame;
+					$('.anim').hide();
+					$('.anim.'+data.frame).show();
+					if($('.anim').children().length>0) {
+						hot.removeHost();
+					}
+				},
+				plugins: [
+					'progress',
+					'360',
+					'drag',
+					'ease',
+					'wheel'
+				]
+			}).data("spritespin");
+			function PageInit(){
+				//加载热点
+				hot.load(jsonData.hotsPotList,true);
+				
+				$(".banner,.mask1").show();
+				$(".praise .text").text(globalConfig.like);	 
+				//设置二维码
+				var qrcode = new QRCode(document.getElementById("qrcode-div"), {
+					width : $('#qrcode-div').width()-10,//设置宽高
+					height : $('#qrcode-div').width()-10
+				})
+				qrcode.makeCode(location.href);
+				$('#qrcode-div .txt').text("人气:" + globalConfig.visit)
+        		$('#qrcode-div').show();
+				//设置标题
+				var $div = $("#title-div").css('opacity','1').find('div');
+				$div.eq(0).html(globalConfig.title1);
+				$div.eq(1).html(globalConfig.title2);
+			}
+			function bindEven(){
+				//状态存储
+				var u = {
+					show:false,   //显示按钮的状态
+					exprand:false, //设置按钮的状态
+					music:false,  //音乐的状态
+				};
+				//点赞
+				$(".praise .bg2").on(clickEvent, function() {		     
+					$(".praise .text").text(++globalConfig.like),
+					$(this).css("transition", "0s"),
+					$(this).css({
+						"background-position-x": "-360px",
+						"pointer-events": "none"
+					}),
+					$(this).off(clickEvent);
+					//调取接口
+					
+				})
+				//反馈
+	 			 $(".feedback").on(clickEvent, function(t) {
+			        t.stopPropagation(),
+			        $.fancybox.open('<div class="message"><h2>此功能暂无</h2></div>');
+			    })
+				//咨询价格
+	 		    $(".ask-price").on(clickEvent, function(t) {
+					t.stopPropagation(),
+			        $.fancybox.open('<div class="message"><h2>此功能暂无</h2></div>');
+			    });
+				//看内景
+				$(".swich-scene").on(clickEvent, function() {		     
+					globalConfig.panourl ? window.location.href = globalConfig.panourl : alert("此车暂无全景内饰，敬请期待!");
+				})
+				//音乐
+				var  h = document.getElementById("audio");
+				h.src = globalConfig.musicurl;
+				$(".setup .music").on(clickEvent, function(t) {
+					t.stopPropagation();
+					var e = $(".setup .music .bg3");
+					e.css("transition", "0s"),
+					u.music = !u.music;
+					if(u.music){
+						e.css("background-position-y", "0"),
+						h.play();
+					}else{
+						e.css("background-position-y", "-70px"),
+						h.pause();
+					}
+					setTimeout(function() {
+						e.css("transition", "0.2s"),
+						$(".setup").trigger(clickEvent)
+					}, 200);		       
+				});
+				//全屏btn
+				$(".setup .screen").on(clickEvent, function(e) {
+					var a = $(this).find('.bg3');
+						e.stopPropagation();
+						if(document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement){
+							document.exitFullscreen ? document.exitFullscreen() : document.msExitFullscreen ? document.msExitFullscreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitExitFullscreen && document.webkitExitFullscreen();
+							
+							a.css("transition", "0s"),
+							setTimeout(function() {
+								a.css("background-position-y", "-70px"),
+								setTimeout(function() {
+									a.css("transition", "0.2s"),
+									$(".setup").trigger(clickEvent)
+								}, 200)
+							}, 0)
+						}else{
+							document.documentElement.requestFullscreen ? document.documentElement.requestFullscreen() : document.documentElement.mozRequestFullScreen ? document.documentElement.mozRequestFullScreen() : document.documentElement.webkitRequestFullscreen ? document.documentElement.webkitRequestFullscreen() : document.documentElement.msRequestFullscreen && document.documentElement.msRequestFullscreen();
+							
+							a.css("transition", "0s");
+							
+							setTimeout(function() {
+								a.css("background-position-y", "0"),
+								setTimeout(function() {
+									a.css("transition", "0.2s"),
+									$(".setup").trigger(clickEvent)
+								}, 200)
+							}, 0);
+						}
+				});
+				//设置btn
+				$(".setup").on(clickEvent, function() {
+					u.exprand = !u.exprand;
+					if(u.exprand ){
+						$(".setup .music,.screen").show(),
+						setTimeout(function() {
+							$(".banner .group .setup .btn3").css({
+								top: "-100px",
+								opacity: 1
+							}),
+							$(".banner .group .setup .music").css({
+								left: "60px"
+							}),
+							$(".banner .group .setup .screen").css({
+								left: "-40px"
+							})
+						}, 0);
+					}else{
+						$(".banner .group .setup .btn3").css({
+							left: "10px",
+							top: "-100px",
+							opacity: 0
+						})
+					setTimeout(function() {
+							$(".btn3").hide();
+						}, 200);
+					}
+				})
+				//显示隐藏btn
+				$(".banner .show").on(clickEvent, function() {	
+					var t = this;
+					u.show = !u.show;
+					var e = $(".banner .show .img")
+					, n = $(".banner .show .text");
+					e.css("transition", "0s");
+					if(u.show){
+						e.css("background-position-y", "0")
+						n.text("显示"),
+						$(".banner,.mask1").css({
+							transform: "translateY(200px)"
+						});
+						setTimeout(function() {
+							$(t).css({
+								transform: "translateY(-200px) scale(" + btn_scale + ")"
+							}),
+							$("#title-div").hide(),
+							$("#qrcode-div").hide(),
+							$(".anim").css('visibility','hidden');
+						}, 500)
+						
+					}else{
+						e.css("background-position-y", "-70px");
+						n.text("隐藏")
+						$(this).css({transform: "translateY(0)  scale(" + btn_scale + ")"});
+						setTimeout(function() {
+							$(".banner").css({
+								transform: "translateY(0)"
+							}),
+							$(".mask1").css({
+								transform: "translateY(0) scaleY(" + btn_scale + ")"
+							}),
+							$("#title-div").show(),
+							$("#qrcode-div").show();
+							$(".anim").css('visibility','visible');
+						}, 300)
+						
+						setTimeout(function() {
+							e.css("transition", "0.2s")
+						}, 0)
+					}     
+				});
+				
+				//热点展示
+				$("body").on(clickEvent, ".anim",function(){
+                    var id = $(this).attr('data-id');
+                    if(!myVue.editStatus){
+                        var infoData = JSON.parse(JSON.stringify(myVue.jsonData.hotsType[id]))
+                        if($('.anim').children('div').length>0) {
+                            if($(this).children().length>0){
+                                $.fancybox.open((option.isMobile?hot.isMobileFancybox(infoData.fancybox):infoData.fancybox), {
+                                    parentEl: "#bg-div",
+                                    loop : false
+                                });
+                            }
+                            return;
+                        };
+                        var transform = hot.getTransform(this.offsetLeft,(.8 * window.innerWidth - this.offsetLeft),this.offsetTop,(.5 * window.innerWidth - this.offsetTop));
+                        $(this).css('transform',"scale("+hot_scale+") "+transform) ;
+                        $(this).append(hot.getShowHtml(infoData,transform)).css('z-index','990');
+                        setTimeout(function() {
+                            $(document).on(clickEvent, hot.removeHost)
+                        }, 0);
+                    }else{
+                        myVue.selHotTypeId = id;
+                        myVue.hotEl = this;
+                    }
+                });
+			}
+		});
+	</script>
+
+</body>
+</html>

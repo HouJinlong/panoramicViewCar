@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	    <meta name="apple-touch-fullscreen" content="yes">
+	    <meta name="apple-mobile-web-app-capable" content=yes>
+	    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+	    <meta name="format-detectio	n" content="telephone=no">
+	    <meta name="full-screen" content="true">
+	    <meta name="browsermode" content="application">
+	    <meta name="x5-orientation" content="portrait">
+	    <meta name="x5-fullscreen" content="true">
+	    <meta name="x5-page-mode" content="app">
+		<title>农机通全景看车</title>
+		<link rel="stylesheet" type="text/css" href="css/mobile.css?v=9"/>
+		<link rel="stylesheet" type="text/css" href="../css/jquery.fancybox.min.css?v=9"/>
+		<!-- <script src="https://cdn.bootcss.com/eruda/1.2.6/eruda.js"></script>
+<script>eruda.init();</script> -->
+		<style>	
+			body{
+				height: 100vh;
+				overflow: hidden;
+			}
+			#hotImg .fancybox-close-small{
+				right:-34px;
+				background: rgba(255,255,255,.4);
+				width: 34px;
+				height:34px;
+				padding: 3px;
+			}
+			#hotImg{
+				overflow:visible;
+				padding: 0;
+				margin: 0;
+			}
+			@media screen and (orientation: portrait) {
+				#hotImg img{
+					max-width: 70vh;
+					height: calc(100vw - 94px);
+					display: block;
+				}
+			}
+			@media screen and (orientation: landscape) {
+				#hotImg img{
+					max-width: 70vw;
+					height: calc(100vh - 94px);
+					display: block;
+				}
+			}
+			.fancybox-infobar{
+				bottom: 0px;
+				top: unset;
+				position: absolute;
+				left: 50%;
+				transform: translateX(-50%);
+				font-size: 16px;
+				color: #ffff;
+			}
+			.fancybox-caption{
+				bottom: unset;
+				top: 10px;
+				padding: 0px;
+				height: 40px;
+				line-height: 40px;
+				text-align: center;
+				font-size: 18px;
+			}
+			.fancybox-caption::before,.fancybox-caption::after{
+				display: none;
+			}
+			.fancybox-navigation .fancybox-button--arrow_right,.fancybox-navigation .fancybox-button--arrow_left{
+				padding: 0 !important;
+			}
+			#mySpriteSpin,.spritespin-stage{
+				overflow: visible !important;
+			}
+		</style>
+	    <script type="text/javascript">
+	    	if (/iphone|nokia|sony|ericsson|mot|samsung|sgh|lg|philips|panasonic|alcatel|lenovo|cldc|midp|wap|android|iPod/i.test(navigator.userAgent.toLowerCase())) {} else {
+						window.location.href = 'pc.html'+location.search;
+			}	
+		</script>
+	<!--获取公共数据-->
+	<script src="../js/data.js?v=9" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		getData('ring');
+	</script>
+	</head>
+	<body>
+		<div id="bg-div">
+		 	 <div class="mask1"></div>
+	        <div class="banner">
+	            <div class="group">
+	                <div class="setup btn2">
+	                    <div class="bg2 s1"></div>
+	                    <div class="text">设置</div>
+	                     <a class="feedback btn3" href="#feedback">
+		                    <div class="bg3 i5"></div>
+		                    <div class="text">反馈</div>
+		                </a>
+	                    <div class="vr btn3">
+	                        <div class="bg3 i1"></div>
+	                        <div class="text">VR</div>
+	                    </div>
+	                    <div class="music btn3">
+	                        <div class="bg3 i2"></div>
+	                        <div class="text">音乐</div>
+	                    </div>
+	                    <div class="gyro btn3">
+	                        <div class="bg3 i3"></div>
+	                        <div class="text">陀螺仪</div>
+	                    </div>
+	                    <div class="screen btn3">
+	                        <div class="bg3 i4"></div>
+	                        <div class="text">全屏</div>
+	                    </div>
+	                </div>
+	                <a class="ask-price btn2" href="#price-div">
+	                    <div class="bg2 s2"></div>
+	                    <div class="text">询价</div>
+	                </a>
+	                <div class="swich-scene btn1">
+	                    <div class="bg1"></div>
+	                    <div class="text">内饰</div>
+	                </div>
+	               <a class="share btn2" href="#share-div">
+	                    <div class="bg2 s3"></div>
+	                    <div class="text">分享</div>
+		            </a>
+	                <div class="praise btn2">
+	                    <div class="bg2 s4"></div>
+	                    <div class="text"></div>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="mask2"></div>
+	        <div class="banner2">
+	            <div class="show">
+	                <div class="img"></div>
+	                <div class="text">隐藏</div>
+	            </div>
+	            <div class="scenelist">
+	            </div>
+	        </div>
+	        <!--内容层-->
+			<div style="width: 100%; height: 100%; overflow: hidden;">
+				<div id='mySpriteSpin' style="z-index: 333;"></div>
+			</div>
+	        <!--内容层-->
+		 	<!--标题-->
+		 	<div id="title-div">
+	            <div id="title1-div"></div>
+	            <div id="title2-div"></div>
+	        </div>
+		 	<audio id="audio" ></audio>
+		 </div>
+		<script src="../js/jquery-2.1.0.js"></script>
+		<script src="../js/jquery.fancybox.min.js?v=9" type="text/javascript" charset="utf-8"></script>
+		<script src="js/spritespin.js?v=9" type="text/javascript" charset="utf-8"></script>
+		<script src="../js/commit.js?v=9" type="text/javascript" charset="utf-8"></script>
+		<script>
+		//页面加载时调用
+		$(function(){
+			orient();
+			var globalConfig = jsonData.globalConfig;
+			
+			//用户变化屏幕方向时调用
+			$(window).bind( 'orientationchange', function(e){
+				location.reload();
+				return;
+				if(option.isWeiXin){
+					orient();
+				}else{
+					location.reload();
+				}
+			});
+			//将页面设置为横屏浏览
+			function orient() {
+				if(option.isWeiXin){
+					var w = $(window).width();
+					var h = $(window).height();
+					var c = 0;
+				}else{
+					var w = document.documentElement.clientWidth;
+					var h = document.documentElement.clientHeight;
+					var c = 0;
+				}
+				if (window.orientation == 90 || window.orientation == -90) {
+					//ipad、iphone竖屏；Andriod横屏
+					if(w>h){
+						$('#bg-div').css({
+							'width':w,
+							'height':h-c,
+							'left':"0px",
+							'top':"0px",
+							'transform': "none",
+							'transform-origin':'50% 50% 0px'
+						})
+						PageInit(w,h,true);
+					}else{
+						$('#bg-div').css({
+							'width':h,
+							'height':w-c,
+							'left':"0px",
+							'top':"0px",
+							'transform': "none",
+							'transform-origin':'50% 50% 0px'
+						})
+						PageInit(h,w,true);
+					}
+					
+					return false;
+				}
+				else if (window.orientation == 0 || window.orientation == 180) {
+					//ipad、iphone横屏；Andriod竖屏
+					if(w<h){
+						h = h-c;
+						$('#bg-div').width(h);
+						$('#bg-div').height(w);
+						$('#bg-div').css({
+							'width':h,
+							'height':w,
+							'left':-((h-w)/2)+"px",
+							'top':((h-w)/2)+"px",
+							'transform': "rotate(90deg)",
+							'transform-origin':'50% 50% 0px'
+						})
+						PageInit(h,w,false);
+					}else{
+						w = w-c;
+						$('#bg-div').width(w);
+						$('#bg-div').height(h);
+						$('#bg-div').css({
+							'width':w,
+							'height':h,
+							'left':-((w-h)/2)+"px",
+							'top':((w-h)/2)+"px",
+							'transform': "rotate(90deg)",
+							'transform-origin':'50% 50% 0px'
+						})
+						PageInit(w,h,false);
+					}
+					return false;
+				}
+			}	
+			
+			//页面初始化
+			function PageInit(w,h,orientation){
+				if(!orientation){
+					jsonData.imgList = jsonData.imgList.reverse();
+					jsonData.hotsPotList.length = jsonData.imgList.length;
+					jsonData.hotsPotList = jsonData.hotsPotList.reverse();
+					jsonData.frame = jsonData.imgList.length - jsonData.frame;
+				}
+				preloadImg(jsonData.hotsType)
+				var mySpriteSpin = $("#mySpriteSpin").spritespin({
+					source: jsonData.imgList,
+					sizeMode:"fit",
+					width   :w, 
+					height  :h, 
+					frameTime:40,
+					frame: jsonData.frame,
+					orientation:(!orientation?'vertical':'horizontal'),//!orientation?'horizontal':'vertical',
+					reverse:false,
+					onLoad:function(){
+						$('.spritespin-progress-bar').hide();
+						var api = $("#mySpriteSpin").spritespin("api");
+						//显示操作提示
+						// var $img = $('<img src="../images/tishi.png" style=" position: fixed; width: 100%; height: 100%;z-index: 99999; top: 0;">');
+						// $('#bg-div').append( $img);
+						// setTimeout(function(){
+						// 	$img.remove();
+						// },1000);
+						//开场动画
+						setTimeout(function(){
+							api.playTo(jsonData.frame,{force:true});
+						},200);
+						$(".banner,.mask1,.banner2,.mask2").show();
+						$(".praise .text").text(globalConfig.like);
+										
+						//设置标题
+						var $div = $("#title-div").css('opacity','1').find('div');
+						$div.eq(0).html(globalConfig.title1);
+						$div.eq(1).html(globalConfig.title2);
+							
+						//加载热点
+						hot.load(jsonData.hotsPotList);	
+						bindEven();
+					},
+					onFrameChanged:function(e,data){
+						$('.anim').hide();
+						$('.anim.'+data.frame).show();
+						if($('.anim').children().length>0) {
+							hot.removeHost();
+						}
+					},
+					plugins: [
+						'progress',
+						'360',
+						'drag',
+						'ease',
+						'wheel'
+					]
+				}).data("spritespin");
+			}
+			function bindEven(){
+				
+				var u = {
+					show:false,
+					exprand:false,
+					music:false
+				};
+				 //点赞
+				 $(".praise .bg2").on(clickEvent, function() {		     
+					$(".praise .text").text(++globalConfig.like),
+					$(this).css("transition", "0s"),
+					$(this).css({
+						"background-position-x": "-360px",
+						"pointer-events": "none"
+					}),
+					$(this).off(clickEvent);
+					//调取接口
+					
+				})
+				//看内景
+				$(".swich-scene").on(clickEvent, function() {		     
+					globalConfig.panourl ? window.location.href = globalConfig.panourl :  $.fancybox.open('<div class="message"><h2>此车暂无全景内饰，敬请期待!</h2></div>',{parentEl: "#bg-div"});
+				})
+				//反馈
+				$(".feedback").on(clickEvent, function(t) {
+			        t.stopPropagation(),
+			        $.fancybox.open('<div class="message"><h2>此功能暂无</h2></div>',{parentEl: "#bg-div"});
+				});
+				//分享
+				$(".share").on(clickEvent, function(t) {
+					t.stopPropagation(),
+			        $.fancybox.open('<div class="message"><h2>此功能暂无</h2></div>',{parentEl: "#bg-div"});
+				});
+				//咨询价格
+	 		    $(".ask-price").on(clickEvent, function(t) {
+					t.stopPropagation(),
+			        $.fancybox.open('<div class="message"><h2>此功能暂无</h2></div>',{parentEl: "#bg-div"});
+				});
+				 //音乐
+				 var  h = document.getElementById("audio");
+				h.src = globalConfig.musicurl;
+				$(".setup .music").on(clickEvent, function(t) {
+					t.stopPropagation();
+					var e = $(".setup .music .bg3");
+					e.css("transition", "0s"),
+					u.music = !u.music;
+					if(u.music){
+						e.css("background-position-y", "0"),
+						h.play();
+					}else{
+						e.css("background-position-y", "-70px"),
+						h.pause();
+					}
+					setTimeout(function() {
+						e.css("transition", "0.2s"),
+						$(".setup").trigger(clickEvent)
+					}, 200);		       
+				});
+				//全屏btn
+				$(".setup .screen").on(clickEvent, function(e) {
+					var a = $(this).find('.bg3');
+						e.stopPropagation();
+						if(document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement){
+							document.exitFullscreen ? document.exitFullscreen() : document.msExitFullscreen ? document.msExitFullscreen() : document.mozCancelFullScreen ? document.mozCancelFullScreen() : document.webkitExitFullscreen && document.webkitExitFullscreen();
+							
+							a.css("transition", "0s"),
+							setTimeout(function() {
+								a.css("background-position-y", "-70px"),
+								setTimeout(function() {
+									a.css("transition", "0.2s"),
+									$(".setup").trigger(clickEvent)
+								}, 200)
+							}, 0)
+						}else{
+							document.documentElement.requestFullscreen ? document.documentElement.requestFullscreen() : document.documentElement.mozRequestFullScreen ? document.documentElement.mozRequestFullScreen() : document.documentElement.webkitRequestFullscreen ? document.documentElement.webkitRequestFullscreen() : document.documentElement.msRequestFullscreen && document.documentElement.msRequestFullscreen();
+							
+							a.css("transition", "0s");
+							
+							setTimeout(function() {
+								a.css("background-position-y", "0"),
+								setTimeout(function() {
+									a.css("transition", "0.2s"),
+									$(".setup").trigger(clickEvent)
+								}, 200)
+							}, 0);
+						}
+				});
+				//设置btn
+				$(".setup").on(clickEvent, function() {
+					u.exprand = !u.exprand;
+					if(u.exprand ){
+						$(".setup .music,.setup .feedback").show(),
+						setTimeout(function() {
+							$(".banner .group .setup .btn3").css({
+								left: "-124px",
+								opacity: 1
+							}),
+							$(".banner .group .setup .music").css({
+								top: "15px"
+							}),
+							$(".banner .group .setup .feedback").css({
+								top: "-81px"
+							})
+						}, 0);
+					}else{
+						$(".banner .group .setup .btn3").css({
+							left: "-70px",
+							top: "15px",
+							opacity: 0
+						})
+					setTimeout(function() {
+							$(".btn3").hide()
+						}, 200)
+					}
+				})
+				//显示隐藏btn
+				$(".banner2 .show").on(clickEvent, function() {	
+					var t = this;
+					var e = $(".banner2 .show .img")
+					, n = $(".banner2 .show .text");
+					e.css("transition", "0s");
+					
+					u.show= !u.show;
+					if(u.show){
+						e.css("background-position-y", "0"),
+						n.text("显示"),
+						$(".banner,.mask1").css({
+							transform: "translateX(200px)"
+						}),
+						$(".banner2,.mask2").css({
+							transform: "translateX(-200px)"
+						}),
+						setTimeout(function() {
+							$(t).css({
+								transform: "translateX(200px) scale(" + btn_scale + ")"
+							}),
+							$("#title-div").hide(),
+						$(".anim").css('visibility','hidden');
+						}, 500);
+					}else{
+						e.css("background-position-y", "-70px"),
+						n.text("隐藏"),
+						$(this).css({
+							transform: "translateX(0) scale(" + btn_scale + ")"
+						}),
+						setTimeout(function() {
+							$(".banner").css({
+								transform: "translateX(0)"
+							}),
+							$(".mask1").css({
+								transform: "translateX(0) scaleX(" + btn_scale + ")"
+							}),
+							$(".banner2").css({
+								transform: "translateX(0)"
+							}),
+							$(".mask2").css({
+								transform: "translateX(0) scaleX(" + btn_scale + ")"
+							}),
+							$("#title-div").show();
+							$(".anim").css('visibility','visible');
+						}, 300);
+					}
+					setTimeout(function() {
+						e.css("transition", "0.2s")
+					}, 0)
+				});
+			
+				//热点展示
+				$("body").on(clickEvent, ".anim",hot.hotShow); 
+				
+			}
+			//预加载热点图
+			function preloadImg(hotsType) {
+				for (var key in hotsType) {
+					if (hotsType.hasOwnProperty(key)) {
+						var element = hotsType[key];
+						element.fancybox.forEach(function(opt){
+							var img = new Image();
+							img.src = opt.src;
+						});
+					}
+				}
+			}
+		});
+		</script>
+	</body>
+</html>

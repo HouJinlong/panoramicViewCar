@@ -1,0 +1,319 @@
+.w-sharing .module-wechat {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box
+}
+
+@-webkit-keyframes praisepoint {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1)
+    }
+
+    80% {
+        -webkit-transform: scale(2);
+        transform: scale(2)
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1)
+    }
+}
+
+@keyframes praisepoint {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1)
+    }
+
+    80% {
+        -webkit-transform: scale(2);
+        transform: scale(2)
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1)
+    }
+}
+
+.icon-sharing::before {
+    content: "";
+    display: inline-block;
+    background: url(../images/icon-sharing-v20150906.png) no-repeat;
+    background-size: 30px auto
+}
+
+.icon-sharing-weibo::before {
+    width: 30px;
+    height: 24px;
+    background-position: 0 0
+}
+
+.icon-sharing-wechat-friend::before {
+    width: 30px;
+    height: 27px;
+    background-position: 0 -30px
+}
+
+.icon-sharing-wechat-circle::before {
+    width: 26px;
+    height: 26px;
+    background-position: 0 -60px
+}
+
+.icon-sharing-qq-friend::before {
+    width: 24px;
+    height: 27px;
+    background-position: 0 -90px
+}
+
+.icon-sharing-qq-zone::before {
+    width: 30px;
+    height: 28px;
+    background-position: 0 -120px
+}
+
+.fn-hide {
+    display: none !important
+}
+
+.w-sharing {
+    font-family: "PingFang SC",Helvetica,Arial,"Hiragino Sans GB","Microsoft Yahei",STHeiTi,sans-serif;
+    line-height: 1
+}
+
+.w-sharing .method {
+    margin: 0;
+    padding: 24px 0 0;
+    list-style: none;
+    font-size: 0;
+    text-align: center;
+    background-color: #fff;
+    overflow: hidden
+}
+
+.w-sharing .method li {
+    float: left;
+    width: 25%;
+    margin: 0;
+    padding: 0 0 28px;
+    vertical-align: top
+}
+
+.w-sharing .method li:first-child:nth-last-child(1) {
+    width: 100%
+}
+
+.w-sharing .method li:first-child:nth-last-child(2) {
+    width: 50%
+}
+
+.w-sharing .method li:first-child:nth-last-child(2) ~ li {
+    width: 50%
+}
+
+.w-sharing .method li:first-child:nth-last-child(3) {
+    width: 33.333%
+}
+
+.w-sharing .method li:first-child:nth-last-child(3) ~ li {
+    width: 33.333%
+}
+
+.w-sharing .method a {
+    display: block;
+    width: 60px;
+    margin: 0 auto;
+    color: #444;
+    text-decoration: none;
+    text-align: center
+}
+
+.w-sharing .method a:visited {
+    color: #444443
+}
+
+.w-sharing .method a .icon-sharing {
+    display: block;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 50%
+}
+
+.w-sharing .method a .icon-sharing-weibo {
+    background-color: #f26868
+}
+
+.w-sharing .method a .icon-sharing-weibo::before {
+    margin-top: 13px
+}
+
+.w-sharing .method a .icon-sharing-wechat-friend {
+    background-color: #49c60b
+}
+
+.w-sharing .method a .icon-sharing-wechat-friend::before {
+    margin-top: 11px
+}
+
+.w-sharing .method a .icon-sharing-wechat-circle {
+    background-color: #35c7eb
+}
+
+.w-sharing .method a .icon-sharing-wechat-circle::before {
+    margin-top: 12px
+}
+
+.w-sharing .method a .icon-sharing-qq-friend {
+    background-color: #4c89f6
+}
+
+.w-sharing .method a .icon-sharing-qq-friend::before {
+    margin-top: 11px
+}
+
+.w-sharing .method a .icon-sharing-qq-zone {
+    background-color: #f1c859
+}
+
+.w-sharing .method a .icon-sharing-qq-zone::before {
+    margin-top: 11px
+}
+
+.w-sharing .method a strong {
+    display: block;
+    margin-top: 8px;
+    font-size: 12px;
+    white-space: nowrap;
+    text-align: center
+}
+
+.w-sharing .cancel {
+    position: relative;
+    z-index: 10;
+    display: block;
+    padding: 18px 0;
+    font-size: 14px;
+    color: #444;
+    text-align: center;
+    background-color: #fff;
+    border-top: solid #d7d7d7 1px;
+    cursor: pointer
+}
+
+.w-sharing .module {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    z-index: 10001;
+    width: 100%
+}
+
+.w-sharing .module-inlay ~ .mask {
+    display: none
+}
+
+.w-sharing .module-inlay ~ div[class="module-guide"] ~ .mask {
+    display: block
+}
+
+.w-sharing .module-inlay ~ div[class="module-wechat"] ~ .mask {
+    display: block
+}
+
+.w-sharing .module-guide {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10001;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    padding-bottom: 51px
+}
+
+.w-sharing .module-guide .guide {
+    width: 100%;
+    height: 100%;
+    background: url(../images/sharing-guide.png) no-repeat center;
+    -webket-background-size: 100% auto;
+    background-size: 100% auto;
+    -webket-background-size: contain;
+    background-size: contain
+}
+
+.w-sharing .module-guide .cancel {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%
+}
+
+.w-sharing .module-wechat {
+    position: fixed;
+    top: 36px;
+    right: 8px;
+    z-index: 10001;
+    width: 164px;
+    height: 71px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUgAAACOCAMAAABkDGEcAAABOFBMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////8si+eVwfK92fhco+zy+P6iyfU+k+nl7/yv0fZNm+psqu/Z6Pv7/P+IufLL4fl6svDf7PxGl+kyjugwjefv9v7D3fk5kelVn+s1j+ibxfSNvPL1+v6pzfaEt/Fyr+9mqO611Pdgpe1aoew7kuk0jujO4/p/tfB3se/H3/lKmerq8/3W5/uQv/PT5vrn8fyECkLBAAAAOHRSTlMAkokFV9SDOSyyR+ZcDjURmGhQGPC7tcF5IdCNcqKcVBTd16tM4c1+Q/QJ+MU/HiV2bWLtzMgcJ03JFisAABB+SURBVHja7NxZVxNBEAXgFtyPgEuILO6iRwRxOaj3gllYRpglKyFEMIRF8P//AyE1YcZEksngG/U956lPZ7q7+lYbFdngm7dGXdT4wGcA85NPjbqI69Pwjb43Kq73owhMD0wZFcv7Gfwt+cWoGEbRLqEjGcNTdErq37t/V/AvyTmj+jMP366FkISOZH/eQliNwnYOIc9vG9WHZxA5koWyjZDrRkU3DPHbI1mvryFEl5w+fITIsymT1SUnnmsQaYriLkIS40ZFch8+hydc0vV2VhGYfmNUFJPBWnNqI0O6mbyNgI5kJJ8hFkj+JKtLBy5Z8LIIDBvV0yCElSFZJUupslMiGd5STmtlrbc78G2RW4skF638XpF0ttf0kNOPu6HNz6ZVJGsWgPQ3p1TLW2hJGhVx87NO1n+hSvIYQOp4y9k5WrJ1Zx7VCEQqQ64ARyQX0LS70Sjv5+AbMKqrqxCVAr1fwCHJHYiUnU+f1YNmjerqMcQxeYATK2Q9B2Fl7V9Z+Izq6hXEBlnFCZvkIVpyu78tHcgo5iAqJXITp76RP9Bp3qhuxiCaG0icapDb6HTFqG6SEJukW8GpVY8uOmkAo7tEcKxZR1PWIZfQbtSobm4CrWlIG03W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") no-repeat;
+    background-size: 100% 100%;
+    cursor: pointer;
+    -webkit-animation: w-sharing-wechat 600ms ease 100ms both;
+    animation: w-sharing-wechat 600ms ease 100ms both
+}
+
+@-webkit-keyframes w-sharing-wechat {
+    0% {
+        top: 36px
+    }
+
+    100% {
+        top: 12px
+    }
+}
+
+@keyframes w-sharing-wechat {
+    0% {
+        top: 36px
+    }
+
+    100% {
+        top: 12px
+    }
+}
+
+.w-sharing .module-wechat * {
+    display: none
+}
+
+.w-sharing .module-wechat::before,.w-sharing .module-wechat::after {
+    display: none
+}
+
+.w-sharing .module-wechat ~ .mask {
+    background-color: transparent
+}
+
+.w-sharing .module-wechat.fn-hide ~ .mask {
+    background-color: rgba(0,0,0,0.6)
+}
+
+.w-sharing .mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    cursor: pointer
+}
+
+[data-role="share"] {
+    cursor: pointer
+}
